@@ -52,4 +52,21 @@ export const products = [{
         price: 8000,
         stock: 18,
     }
-]
+];
+
+const producto = {
+    id: 6,
+    image: "https://www.montebarranco.com/public/images/sites/542-21888.jpg",
+    product: "Villa Yacanto",
+    category: "Localidades",
+    description: "al pie del Cerro mas alto",
+    price: 8000,
+    stock: 18,};
+    
+    export const traerProducto = () => {
+           return new Promise ((resolve,reject) =>{
+            setTimeout (() => {
+                resolve (producto);
+            })
+           } )
+    };

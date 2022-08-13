@@ -1,20 +1,24 @@
 import { useEffect,useState } from "react";
-import {products} from "./productos"
-import {customFetch} from './customFetch'
+import {traerProducto} from "./productos"
 import ItemDetail from "./ItemDetail"
 
 
 const ItemDetailContainer = ({}) => { 
-    const [listProducts, setListProducts] = useState ({})
+    const [product, setProduct] = useState ({});
     
     useEffect (() => {
-        customFetch(products)
-        .then(data => setListProducts(data))
-    },)
+        traerProducto()
+        .then( (res) => {
+            setProduct(res);
+        })
+        .catch ((error) =>{
+            console.log (error);
+        });
+    },[]);
 
     return (
         <>
-        <itemDetail/>
+        <ItemDetail product={product}/>
         
         </>
     )
