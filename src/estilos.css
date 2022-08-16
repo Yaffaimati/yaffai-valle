@@ -5,13 +5,57 @@
 }
 
 #button {
-    background-color: brown;
+    padding: 2px;
+    margin: 2px;
+    border-radius: 5px;
+    border: 1px solid #131414;
+    text-align: center;
+    background-color: #d199af;
 }
 
 #button2 {
-    background-color: green;
+    padding: 2px;
+    margin: 2px;
+    border-radius: 5px;
+    border: 1px solid #131414;
+    text-align: center;
+    background-color: #8272b5;
 }
 
 #button3 {
-    background-color: hotpink;
+    padding: 2px;
+    margin: 2px;
+    border-radius: 5px;
+    border: 1px solid #131414;
+    text-align: center;
+    background-color: #d1a0e8;
+}
+
+.card {
+    margin: 0 auto;
+    background: var(--card-color);
+    width: 400px;
+    padding: 20px;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.377);
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.contador {
+    padding: 8px;
+    margin: 2px;
+    border-radius: 5px;
+    border: 1px solid #131414;
+    width: 100%;
+    text-align: center;
+    background-color: #bec4c4;
+    text-decoration: none;
+}
+
+.shop {
+    display: flex;
+    margin-left: 12px;
+    color: red;
+    align-items: center;
 }

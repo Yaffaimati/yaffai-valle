@@ -1,3 +1,4 @@
+
 export const customFetch = (products) => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -5,3 +6,5 @@ export const customFetch = (products) => {
         }, 2000)
     })
 }
+
+
