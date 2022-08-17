@@ -63,10 +63,10 @@ description: "al pie del Cerro mas alto",
 price: 8000,
 stock: 18,};
 
-export const traerProducto = () => {
+export const traerProducto = (products) => {
        return new Promise ((resolve,reject) =>{
         setTimeout (() => {
-            resolve (producto);
-        })
+            resolve (products);
+        },1000)
        } )
 };

@@ -4,8 +4,9 @@ const ItemList = ({listProducts}) => {
    
     return (           
         <section>
-          {listProducts.map(product => <Item key={product.id}
-           product = {product} /> )}
+          {listProducts.map((product) => {
+            return <Item key={product.id} product={product}/>
+          } )}
         </section>
     )
 }

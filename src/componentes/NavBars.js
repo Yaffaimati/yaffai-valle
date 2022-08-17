@@ -8,13 +8,13 @@ function NavBars() {
         <Nav.Link href="/home">TURISMO</Nav.Link>
       </Nav.Item>       
       <Nav.Item as="li">
-        <Nav.Link href="/category/localidades">Localidades</Nav.Link>
+        <Nav.Link href="/category/Localidades">Localidades</Nav.Link>
       </Nav.Item>  
       <Nav.Item as="li">
-        <Nav.Link href="/category/hospedajes">Hospedajes</Nav.Link>
+        <Nav.Link href="/category/Hospedajes">Hospedajes</Nav.Link>
       </Nav.Item>
       <Nav.Item as="li">
-        <Nav.Link href="/category/excursiones">Excursiones</Nav.Link>
+        <Nav.Link href="/category/Excursiones">Excursiones</Nav.Link>
       </Nav.Item>
        
       <CartWidget/>
