@@ -16,8 +16,9 @@ function NavBars() {
       <Nav.Item as="li">
         <Nav.Link href="/category/Excursiones">Excursiones</Nav.Link>
       </Nav.Item>
-       
+      <Nav.Link href="/detalle/cart">
       <CartWidget/>
+      </Nav.Link>
     </Nav>
   );
 }
