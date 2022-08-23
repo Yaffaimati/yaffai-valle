@@ -15,12 +15,11 @@ function NavBars(product) {
       </Nav.Item>
       <Nav.Item as="li">
         <Nav.Link href="/category/Excursiones">Excursiones</Nav.Link>
-        
+        </Nav.Item>
 
-      </Nav.Item>
-      <Nav.Link href="/cart">
+    
       <CartWidget/>
-      </Nav.Link>
+    
     </Nav>
   );
 }

@@ -5,12 +5,16 @@ import Cart from './Cart'
 const ItemCount = ({initial,stock, onAdd}) => {
     
 
-    const[contador, setContador] = useState (initial)
-    
+    const[contador, setContador] = useState (0)
+    const [confirmed, setConfirmed] = useState (false)
      
-    const sumar = () => contador < stock && setContador(contador + 1)
-    const restar = () => contador > initial && setContador (contador - 1)
-    const confirmar = () =>  onAdd 
+    const sumar = () =>{
+         setContador  (contador + 1)}
+    const restar = () => {
+        setContador (contador - 1)}
+    const confirmar = () => {
+        onAdd(contador)
+    }   
     
             return (
             <div className="contador">

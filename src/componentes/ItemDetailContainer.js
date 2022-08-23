@@ -14,7 +14,7 @@ const ItemDetailContainer = () => {
         traerProducto(products)
         
         .then(data => {
-            setProduct(data.find(item=>item.id===id))
+            setProduct(data.find(item=>item.id==id))
         })
         
     },[id])
