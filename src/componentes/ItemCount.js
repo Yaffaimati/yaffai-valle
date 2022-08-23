@@ -1,5 +1,6 @@
 import {useState} from "react"
 import {Link} from 'react-router-dom'
+import Cart from './Cart'
 
 const ItemCount = ({initial,stock, onAdd}) => {
     
@@ -12,11 +13,12 @@ const ItemCount = ({initial,stock, onAdd}) => {
     const confirmar = () =>  onAdd 
     
             return (
-            <div class="contador">
+            <div className="contador">
                 <p id="parrafo">Cantidad: {contador}</p>
                 <button onClick ={sumar} id='button'>Sumar</button>
                 <button onClick ={restar} id='button2'>Restar </button>
-               <Link to={"/detalle/cart"}>
+               <Link to={"/cart"}>
+                <Cart/>
                 <button onClick ={confirmar} id='button3'>Confirmar Compra</button>
                 </Link> 
             </div>

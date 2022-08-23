@@ -1,7 +1,7 @@
 import {Nav} from 'react-bootstrap';
 import CartWidget from "./CartWidget.js";
 
-function NavBars() {
+function NavBars(product) {
   return (
     <Nav defaultActiveKey="/turismo" as="ul">
       <Nav.Item as="li">
@@ -15,8 +15,10 @@ function NavBars() {
       </Nav.Item>
       <Nav.Item as="li">
         <Nav.Link href="/category/Excursiones">Excursiones</Nav.Link>
+        
+
       </Nav.Item>
-      <Nav.Link href="/detalle/cart">
+      <Nav.Link href="/cart">
       <CartWidget/>
       </Nav.Link>
     </Nav>

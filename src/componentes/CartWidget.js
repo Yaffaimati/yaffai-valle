@@ -2,8 +2,8 @@
 function CartWidget () {
     return (
         <>
-        <div class="shop">
-        <i class="bi bi-cart4"></i>
+        <div className="shop">
+        <i className="bi bi-cart4"></i>
         </div>
         </>
     )
