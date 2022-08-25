@@ -9,14 +9,14 @@ const CartWidget = ({}) => {
 
 
     return (
-        <>
+        <div>
         <NavLink to="/cart">
         <div className="shop">
         <i className="bi bi-cart4"></i>
         </div>
         {cantidad}
         </NavLink>
-        </>
+        </div>
     )
 }
 export default CartWidget
