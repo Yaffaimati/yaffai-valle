@@ -3,9 +3,9 @@ import CartWidget from "./CartWidget.js";
 
 function NavBars(product) {
   return (
-    <Nav defaultActiveKey="/turismo" as="ul">
+    <Nav defaultActiveKey="/" as="ul">
       <Nav.Item as="li">
-        <Nav.Link href="/home">TURISMO</Nav.Link>
+        <Nav.Link href="/">TURISMO</Nav.Link>
       </Nav.Item>       
       <Nav.Item as="li">
         <Nav.Link href="/category/Localidades">Localidades</Nav.Link>
@@ -17,8 +17,9 @@ function NavBars(product) {
         <Nav.Link href="/category/Excursiones">Excursiones</Nav.Link>
         </Nav.Item>
 
-    
+       <Nav.Link to={"/cart"}> 
       <CartWidget/>
+      </Nav.Link>
     
     </Nav>
   );

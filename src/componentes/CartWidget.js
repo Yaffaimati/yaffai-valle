@@ -1,22 +1,19 @@
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Badge } from '@mui/material'
+import {useContext} from 'react'
+import {CartContext } from './CartContext';
 
-import {NavLink} from "react-router-dom"
-import {contexto} from "./CartContext"
-import {useContext} from "react"
+const CartWidget = () => {
 
-const CartWidget = ({}) => {
+  const {getItemQty} = useContext(CartContext)
 
-    const {cantidad} = useContext(contexto)
-
-
-    return (
-        <div>
-        <NavLink to="/cart">
-        <div className="shop">
-        <i className="bi bi-cart4"></i>
-        </div>
-        {cantidad}
-        </NavLink>
-        </div>
-    )
+  return (
+    <div>
+      <Badge badgeContent={getItemQty()} >
+        <ShoppingCartIcon />
+      </Badge>
+    </div >
+  )
 }
+
 export default CartWidget

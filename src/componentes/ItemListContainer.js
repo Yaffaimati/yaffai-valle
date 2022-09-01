@@ -24,7 +24,7 @@ const ItemListContainer = ({greeting}) => {
     return (
         <>
         <h2>{greeting}</h2>
-        {loading && <ItemList listProducts={listProducts} />}
+        { loading && <ItemList listProducts={listProducts} />}
         </>
     )
 }

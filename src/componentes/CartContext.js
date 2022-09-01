@@ -1,36 +1,53 @@
-import {createContext, useState} from 'react';
+import {createContext, useState} from "react";
 
-export const contexto = createContext ();
+export const CartContext = createContext ()
+ 
+const {Provider} = CartContext
 
-const {Provider} = contexto;
-
-const CartContext = (props) => {
-
-    const [cantidad, setCantidad] = useState(0);
-    const [carrito, setCarrito] = useState ([]);
-     
-    const agregarProducto = (producto) => {
-        setCantidad (cantidad + producto.cantidad)
-    }
-
-    const eliminarProducto = () => {}
-
-    const vaciarCarrito = () => {
-        setCarrito([])
-    }
-
-    const valorDelContexto = {
-        cantida: 10,
-        carrito : [],
-        agregarProducto,
-        eliminarProducto,
-       }
+const MyProvider = ({children}) => {
     
-    return (
-    <Provider value={valorDelContexto}>
-        {props.children}
+    const [cart, setCart] = useState ([])
 
-    </Provider>
-    )
+    const isInCart = (id) => {
+        return cart.some(item => item.id === id)
+    }
+
+    const addItem = (item, qty) => {
+        const newItem ={
+            ...item,
+            qty
+        }
+        if (isInCart(newItem.id)) {
+            const findProduct = cart.find(item => item.id === newItem.id)
+            const product = cart.productOf(findProduct)
+            const auxProducts =[...cart]
+            auxProducts[product].qty += qty
+            setCart(auxProducts)
+
+
+        } else {
+            setCart([...cart, newItem])
+        }
+
+    }
+
+    const emptyCart = () => {
+        return setCart([])
+    }
+
+    const deleteItem = (id) => {
+        return setCart(cart.filter(item => item.id !== id))
+    }
+
+    const getItemQty = () => {
+        return cart.reduce((acc, item) => acc += item.qty, 0)
+    }
+
+    const getItemPrice = () => {
+        return cart.reduce((acc, item)=> acc += item.qty * item.price, 0)
+    }
+
+  return <Provider value={{cart, isInCart, addItem, emptyCart, deleteItem, getItemQty, getItemPrice}}>{children}</Provider>
 }
-export default CartContext;
+
+export default MyProvider
