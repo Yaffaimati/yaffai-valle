@@ -1,33 +1,38 @@
-import React from 'react'
+
+import {useState} from "react"
 
 
 
 
 
 
-    const ItemCount = ({ qty, setQty, stock, onAdd }) => {
+    const ItemCount = ({ initial, stock, onAdd }) => {
 
-        const handlerMinus = () => {
-            if (qty > 1) {
-                setQty(qty - 1)
-            }
+        const [contador, setContador] = useState(0)
+        
+
+        const sumar = () => {
+            
+            setContador(contador + 1)
         }
     
-        const handlerPlus = () => {
-            if (qty < stock) {
-                setQty(qty + 1)
-            }
+        const restar = () => {
+            setContador(contador - 1)
         }
-
+    
+        const confirmar = () => {
+            onAdd(contador)
+        }
+        
     return (
         <>
         <div className="contador">
-        <p id="parrafo">Cantidad: {qty}</p> 
-        <button className={`btn ${qty < stock ? "btn-success" : "btn-danger"}`} onClick={handlerPlus} id='button'>Sumar</button>
-        <button className={`btn ${qty > 1 ? "btn-success" : "btn-danger"}`} onClick={handlerMinus} id='button2'>Restar</button>
+        <p id="parrafo">Cantidad: {contador}</p> 
+        <button className={`btn ${contador < stock.id ? "btn-success" : "btn-danger"}`} onClick={sumar} id='button'>Sumar</button>
+        <button className={`btn ${contador > 1 ? "btn-success" : "btn-danger"}`} onClick={restar} id='button2'>Restar</button>
         
        
-        <button className='btn btn-primary' onClick={() => {onAdd()}} id='button3'>Agregar al Carrito</button>
+        <button className='btn btn-primary' onClick={confirmar} id='button3'>Agregar al Carrito</button>
      
     
     </div>

@@ -1,53 +1,51 @@
-import {createContext, useState} from "react";
+import { createContext, useState } from "react"
 
-export const CartContext = createContext ()
- 
-const {Provider} = CartContext
+export const contexto = createContext()
 
-const MyProvider = ({children}) => {
+const {Provider} = contexto ()
+
+export const MiProvider = ({children}) => {
+
+    const [carrito, setCarrito] = useState([])
+    const [cantidad_total, setCantidadTotal] = useState(0)
+    const [precio_total, setPrecioTotal] = useState(0)
+
+    const agregarProducto = (producto,cantidad) => {
+        const copia = [...carrito]
+        
+        const nuevo_producto = {
+            ...producto,
+            cantidad : cantidad
+        }
+
+        copia.push(nuevo_producto)
+        setCarrito(copia)
+        setCantidadTotal(cantidad_total+cantidad)
+        setPrecioTotal(precio_total+cantidad*producto.precio)
+    }
+
+    const eliminarProducto = (producto) => {
+
+    }
     
-    const [cart, setCart] = useState ([])
-
-    const isInCart = (id) => {
-        return cart.some(item => item.id === id)
-    }
-
-    const addItem = (item, qty) => {
-        const newItem ={
-            ...item,
-            qty
-        }
-        if (isInCart(newItem.id)) {
-            const findProduct = cart.find(item => item.id === newItem.id)
-            const product = cart.productOf(findProduct)
-            const auxProducts =[...cart]
-            auxProducts[product].qty += qty
-            setCart(auxProducts)
-
-
-        } else {
-            setCart([...cart, newItem])
-        }
+    const actualizarCantidad = (producto, cantidad) => {
 
     }
 
-    const emptyCart = () => {
-        return setCart([])
+    const vaciarCarrito = () => {}
+
+    const valorDelContexto = {
+        carrito : carrito,
+        cantidad_total : cantidad_total,
+        precio_total : precio_total,
+        agregarProducto : agregarProducto,
     }
 
-    const deleteItem = (id) => {
-        return setCart(cart.filter(item => item.id !== id))
-    }
 
-    const getItemQty = () => {
-        return cart.reduce((acc, item) => acc += item.qty, 0)
-    }
-
-    const getItemPrice = () => {
-        return cart.reduce((acc, item)=> acc += item.qty * item.price, 0)
-    }
-
-  return <Provider value={{cart, isInCart, addItem, emptyCart, deleteItem, getItemQty, getItemPrice}}>{children}</Provider>
+    return (
+        <Provider value={valorDelContexto}>
+            {children}
+        </Provider>
+    )
 }
-
-export default MyProvider
+export default MiProvider
