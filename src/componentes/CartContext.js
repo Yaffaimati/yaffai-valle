@@ -1,51 +1,44 @@
-import { createContext, useState } from "react"
+import {createContext, useContext, useState} from 'react';
 
-export const contexto = createContext()
+const contexto = createContext ();
 
-const {Provider} = contexto ()
+const {Provider} = contexto;
 
-export const MiProvider = ({children}) => {
+export const useCarrito = () => {
+    return useContext(contexto)
+}
 
-    const [carrito, setCarrito] = useState([])
-    const [cantidad_total, setCantidadTotal] = useState(0)
-    const [precio_total, setPrecioTotal] = useState(0)
+const CartContext = (props) => {
 
-    const agregarProducto = (producto,cantidad) => {
-        const copia = [...carrito]
-        
-        const nuevo_producto = {
-            ...producto,
-            cantidad : cantidad
-        }
+    const [cantidad, setCantidad] = useState(0);
+    const [carrito, setCarrito] = useState ([]);
+    const [precioTotal, serPrecioTotal] = useState (0);
+    
 
-        copia.push(nuevo_producto)
-        setCarrito(copia)
-        setCantidadTotal(cantidad_total+cantidad)
-        setPrecioTotal(precio_total+cantidad*producto.precio)
+    const agregarProducto = (product) => {
+        setCantidad (cantidad + product.cantidad)
     }
 
-    const eliminarProducto = (producto) => {
+    const eliminarProducto = () => {}
 
+    const vaciarCarrito = () => {
+        setCarrito([])
     }
     
-    const actualizarCantidad = (producto, cantidad) => {
-
-    }
-
-    const vaciarCarrito = () => {}
+    const estaEnCarrito = (id) => {}    
 
     const valorDelContexto = {
-        carrito : carrito,
-        cantidad_total : cantidad_total,
-        precio_total : precio_total,
-        agregarProducto : agregarProducto,
-    }
-
-
+        cantidad: cantidad,
+        carrito : [],
+        agregarProducto,
+        eliminarProducto,
+       }
+    
     return (
-        <Provider value={valorDelContexto}>
-            {children}
-        </Provider>
+    <Provider value={valorDelContexto}>
+        {props.children}
+
+    </Provider>
     )
 }
-export default MiProvider
+export default CartContext;

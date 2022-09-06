@@ -3,6 +3,10 @@ import {useState, useEffect} from 'react'
 import { products } from "./productos"
 import ItemList from "./ItemList"
 import {useParams} from 'react-router-dom'
+import { db } from "././firebase"
+import { collection, getDoc, getDocs } from "firebase/firestore"
+
+
 
 const ItemListContainer = ({greeting}) => { 
     const [listProducts, setListProducts] = useState ([])
@@ -10,16 +14,28 @@ const ItemListContainer = ({greeting}) => {
     const {id} = useParams ()
 
     useEffect (() => {
-        customFetch(products)
-        .then(data =>{
-            setLoading(true)
-            if(id){
-                 setListProducts(data.filter(item=>item.category===id))
-            } else {
-                setListProducts(data)
-            }
-        } )
-    },[id] )
+
+     const productosCollection = collection(db, "productos")
+        
+     const consulta = getDocs (productosCollection)
+
+     consulta
+     .then(snapshot=>{
+        
+        const listProducts = snapshot.docs.map(doc=>{
+            
+           return{
+            ...doc.data(),
+            id: doc.id
+        }
+        })
+        setListProducts(listProducts)
+        setLoading(false)
+     })
+     .catch(err=>{
+        console.log(err)
+     })
+    },[id])  
 
     return (
         <>

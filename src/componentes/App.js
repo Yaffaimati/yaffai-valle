@@ -3,12 +3,12 @@ import ItemListContainer from "./ItemListContainer"
 import ItemDetailContainer from "./ItemDetailContainer"
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Cart from "./Cart"
-import MyProvider from './CartContext'
+import CartContext from './CartContext'
 
 function App (){
     return (
     <BrowserRouter>
-      <MyProvider titulo="compra"> 
+      <CartContext> 
         <NavBars/>
         <Routes>
         <Route exact path='/' element={<ItemListContainer/>} />  
@@ -16,7 +16,7 @@ function App (){
         <Route exact path='/detalle/:id' element={<ItemDetailContainer/>}/>
         <Route exact path='/cart' element={<Cart/>}/>
         </Routes>
-      </MyProvider>
+      </CartContext>
     </BrowserRouter>
     
     

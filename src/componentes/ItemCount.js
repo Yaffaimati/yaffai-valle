@@ -1,45 +1,38 @@
 
 import {useState} from "react"
+import {Link} from 'react-router-dom'
+import Cart from './Cart'
 
-
-
-
-
-
-    const ItemCount = ({ initial, stock, onAdd }) => {
-
-        const [contador, setContador] = useState(0)
-        
-
-        const sumar = () => {
-            
-            setContador(contador + 1)
-        }
+const ItemCount = ({initial,stock, onAdd}) => {
     
+
+    const[contador, setContador] = useState (0)
+    const [confirmed, setConfirmed] = useState (false)
+    
+    
+        const sumar = () =>{
+         if (contador < stock) {
+            setContador  (contador + 1)}
+        }   
+        
         const restar = () => {
-            setContador(contador - 1)
+         if(contador > initial) {    
+             setContador (contador - 1)}
         }
     
         const confirmar = () => {
-            onAdd(contador)
-        }
-        
-    return (
-        <>
-        <div className="contador">
-        <p id="parrafo">Cantidad: {contador}</p> 
-        <button className={`btn ${contador < stock.id ? "btn-success" : "btn-danger"}`} onClick={sumar} id='button'>Sumar</button>
-        <button className={`btn ${contador > 1 ? "btn-success" : "btn-danger"}`} onClick={restar} id='button2'>Restar</button>
-        
-       
-        <button className='btn btn-primary' onClick={confirmar} id='button3'>Agregar al Carrito</button>
-     
+        onAdd(contador)
+    }   
     
-    </div>
-           
-               
-        </>
-    )
+            return (
+            <div className="contador">
+                <p id="parrafo">Cantidad: {contador}</p>
+                <button onClick ={sumar} id='button'>Sumar</button>
+                <button onClick ={restar} id='button2'>Restar </button>
+               <Link to={"/cart"}>
+                <button onClick ={confirmar} id='button3'>Confirmar Compra</button>
+                </Link> 
+            </div>
+            )
 }
-
 export default ItemCount
