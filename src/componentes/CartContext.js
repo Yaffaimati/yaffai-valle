@@ -5,7 +5,9 @@ const contexto = createContext ();
 const {Provider} = contexto;
 
 export const useCarrito = () => {
-    return useContext(contexto)
+    const valor_del_contexto = useContext (contexto)
+
+    return valor_del_contexto
 }
 
 const CartContext = (props) => {
@@ -16,6 +18,7 @@ const CartContext = (props) => {
     
 
     const agregarProducto = (product) => {
+    
         setCantidad (cantidad + product.cantidad)
     }
 
@@ -29,9 +32,9 @@ const CartContext = (props) => {
 
     const valorDelContexto = {
         cantidad: cantidad,
-        carrito : [],
-        agregarProducto,
-        eliminarProducto,
+        carrito : carrito,
+        setCantidad,
+        setCarrito
        }
     
     return (
