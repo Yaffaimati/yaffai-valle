@@ -1,23 +1,24 @@
-import  {customFetch}   from './customFetch'
+
 import {useState, useEffect} from 'react'
-import { products } from "./productos"
 import ItemList from "./ItemList"
 import {useParams} from 'react-router-dom'
-import { db } from "././firebase"
-import { collection, getDoc, getDocs } from "firebase/firestore"
+import { db } from "../firebase"
+import { collection, getDocs , query, where } from "firebase/firestore"
 
 
 
-const ItemListContainer = ({greeting}) => { 
+const ItemListContainer = () => { 
     const [listProducts, setListProducts] = useState ([])
-    const[loading,setLoading] = useState (false)
+    const[loading,setLoading] = useState (true)
     const {id} = useParams ()
 
     useEffect (() => {
 
      const productosCollection = collection(db, "productos")
-        
-     const consulta = getDocs (productosCollection)
+     
+     const filtro = query(productosCollection, where("category","==",id))
+
+     const consulta = getDocs (filtro)
 
      consulta
      .then(snapshot=>{
@@ -35,15 +36,18 @@ const ItemListContainer = ({greeting}) => {
      .catch(err=>{
         console.log(err)
      })
-    },[id])  
+    },[])  
 
     return (
         <>
-        <h2>{greeting}</h2>
         { loading && <ItemList listProducts={listProducts} />}
         </>
     )
-}
 
+}
+    
+
+    
+    
 
 export default ItemListContainer
