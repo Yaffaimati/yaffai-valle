@@ -1,6 +1,8 @@
 import {useState} from "react"
 import {db} from "../firebase"
-import {collection, addDoc} from "firebase/firestore"
+import {collection, addDoc, serverTimestamp} from "firebase/firestore"
+import {useCarrito} from "./CartContext"
+import {toast} from "react-toastify";
 
 const productosCollection = collection (db, "productos")
 
@@ -58,11 +60,19 @@ const {carrito} = useCarrito()
         email: "emai@mail.com",
       },
       total : 0,
-      date : new Date(),
+      date : serverTimestamp(),
     }
 
     const ordersCollection = collection (db, "orders")
     const consulta = addDoc(ordersCollection,orden)
+
+      consulta 
+      .then((res) => {
+        toast.success(`Orden${res.id} creada con exito!`)
+      })
+      .catch(error => {
+        console.log(error)
+      })
 
   }
     

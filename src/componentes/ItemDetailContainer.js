@@ -7,7 +7,7 @@ import {collection, getDoc, doc} from "firebase/firestore"
 
 const ItemDetailContainer = () => { 
     
-    const [product, setProduct] = useState ({});
+    const [productos, setProductos] = useState ({});
      const { id } = useParams();
 
     useEffect (() => {
@@ -18,7 +18,7 @@ const ItemDetailContainer = () => {
        
        consulta 
        .then((res)=>{
-        setProduct(res.data())
+        setProductos(res.data())
        })
        .catch((err) => {
         console.log(err)
@@ -27,7 +27,7 @@ const ItemDetailContainer = () => {
 
     return (
         <>
-        <ItemDetail product={product}/>
+        <ItemDetail productos={productos}/>
         
         </>
     )

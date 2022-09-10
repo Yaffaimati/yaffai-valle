@@ -8,7 +8,7 @@ import { collection, getDocs , query, where } from "firebase/firestore"
 
 
 const ItemListContainer = () => { 
-    const [listProducts, setListProducts] = useState ([])
+    const [productos, setProductos] = useState ([])
     const[loading,setLoading] = useState (true)
     const {id} = useParams ()
 
@@ -23,14 +23,14 @@ const ItemListContainer = () => {
      consulta
      .then(snapshot=>{
         
-        const listProducts = snapshot.docs.map(doc=>{
+        const productos = snapshot.docs.map(doc=>{
             
            return{
             ...doc.data(),
             id: doc.id
         }
         })
-        setListProducts(listProducts)
+        setProductos(productos)
         setLoading(false)
      })
      .catch(err=>{
@@ -44,14 +44,14 @@ const ItemListContainer = () => {
         consulta
         .then(snapshot=>{
            
-           const listProducts = snapshot.docs.map(doc=>{
+           const productos = snapshot.docs.map(doc=>{
                
               return{
                ...doc.data(),
                id: doc.id
            }
            })
-           setListProducts(listProducts)
+           setProductos(productos)
            setLoading(false)
         })
         .catch(err=>{
@@ -63,7 +63,7 @@ const ItemListContainer = () => {
 
     return (
         <>
-        { loading && <ItemList listProducts={listProducts} />}
+        { loading && <ItemList productos={productos} />}
         </>
     )
 
