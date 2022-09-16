@@ -83,7 +83,7 @@ const {carrito} = useCarrito()
        <input type="text" placeholder="Email" onChange={handleChangeEmail} value={email}/>
        <input type="text" placeholder="Telefono" onChange={handleChangeTelefono} value={telefono}/>
 
-       <button onClick={handleConfirm}>confirmar compra</button>
+       <button onClick={handleConfirm}>Confirmar compra</button>
        </div>
   )
 }
