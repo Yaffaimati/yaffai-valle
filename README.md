@@ -1,7 +1,7 @@
 ...
 # YAFFAI VALLE
 
-<img src="public/foto1.png" height="300">
+<img src="public/ph.gif" height="300">
 
 ...
 ## TURISMO DEL VALLE DE CALAMUCHITA
@@ -42,3 +42,10 @@
 
 
 <img src="public/fo.gif" height="300">
+
+...
+
+[<< Visita nuesta app en Vercel >>]( http://yaffai-valle.vercel.app/ )  
+
+
+

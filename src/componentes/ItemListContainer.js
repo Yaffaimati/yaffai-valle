@@ -1,38 +1,76 @@
 
-
-
-
-
-import  {customFetch}   from './customFetch'
 import {useState, useEffect} from 'react'
-import { products } from "./productos"
 import ItemList from "./ItemList"
 import {useParams} from 'react-router-dom'
+import { db } from "../firebase"
+import { collection, getDocs , query, where } from "firebase/firestore"
 
-const ItemListContainer = ({greeting}) => { 
-    const [listProducts, setListProducts] = useState ([])
-    const[loading,setLoading] = useState (false)
+
+
+const ItemListContainer = () => { 
+    const [productos, setProductos] = useState ([])
+    const[loading,setLoading] = useState (true)
     const {id} = useParams ()
 
     useEffect (() => {
-        customFetch(products)
-        .then(data =>{
-            setLoading(true)
-            if(id){
-                 setListProducts(data.filter(item=>item.category===id))
-            } else {
-                setListProducts(data)
-            }
-        } )
-    },[id] )
+   
+        
+   
+        if (!id){ 
+          const productosCollection = collection(db, "productos") 
+          const consulta = getDocs (productosCollection)
+
+     consulta
+     .then(snapshot=>{
+        
+        const productos = snapshot.docs.map(doc=>{
+            
+           return{
+            ...doc.data(),
+            id: doc.id
+        }
+        })
+        setProductos(productos)
+        setLoading(false)
+     })
+     .catch(err=>{
+        console.log(err)
+     })
+    }else{
+        const productosCollection = collection(db, "productos") 
+         const filtro = query(productosCollection, where)
+        const consulta = getDocs (filtro)
+   
+        consulta
+        .then(snapshot=>{
+           
+           const productos = snapshot.docs.map(doc=>{
+               
+              return{
+               ...doc.data(),
+               id: doc.id
+           }
+           })
+           setProductos(productos)
+           setLoading(false)
+        })
+        .catch(err=>{
+           console.log(err)
+        })
+
+    }
+    },[id])  
 
     return (
         <>
-        <h2>{greeting}</h2>
-        {loading && <ItemList listProducts={listProducts} />}
+        { loading && <ItemList productos={productos} />}
         </>
     )
-}
 
+}
+    
+
+    
+    
 
 export default ItemListContainer

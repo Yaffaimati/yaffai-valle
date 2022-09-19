@@ -1,16 +1,26 @@
-import {createContext, useState} from 'react';
 
-export const contexto = createContext ();
+import {createContext, useContext, useState} from 'react';
+
+const contexto = createContext ();
 
 const {Provider} = contexto;
+
+export const useCarrito = () => {
+    const valor_del_contexto = useContext (contexto)
+
+    return valor_del_contexto
+}
 
 const CartContext = (props) => {
 
     const [cantidad, setCantidad] = useState(0);
     const [carrito, setCarrito] = useState ([]);
-     
-    const agregarProducto = (producto) => {
-        setCantidad (cantidad + producto.cantidad)
+    const [precioTotal, serPrecioTotal] = useState (0);
+    
+
+    const agregarProducto = (product) => {
+    
+        setCantidad (cantidad + product.cantidad)
     }
 
     const eliminarProducto = () => {}
@@ -18,12 +28,14 @@ const CartContext = (props) => {
     const vaciarCarrito = () => {
         setCarrito([])
     }
+    
+    const estaEnCarrito = (id) => {}    
 
     const valorDelContexto = {
-        cantida: 10,
-        carrito : [],
-        agregarProducto,
-        eliminarProducto,
+        cantidad: cantidad,
+        carrito : carrito,
+        setCantidad,
+        setCarrito
        }
     
     return (
@@ -34,3 +46,4 @@ const CartContext = (props) => {
     )
 }
 export default CartContext;
+
