@@ -1,22 +1,22 @@
+
 import {NavLink} from "react-router-dom"
-import {useCarrito} from "./CartContext"
+import {contexto} from "./CartContext"
+import {useContext} from "react"
 
+const CartWidget = ({}) => {
 
-const CartWidget = ({type}) => {
-
-    const {cantidad} = useCarrito ()
+    const {cantidad} = useContext(contexto)
 
 
     return (
-        <>
-        {type == "header" ?(
+        <div>
         <NavLink to="/cart">
         <div className="shop">
-        <i className="bi bi-cart4"></i>{cantidad}
+        <i className="bi bi-cart4"></i>
         </div>
+        {cantidad}
         </NavLink>
-        ): <></>}
-        </>
+        </div>
     )
 }
 export default CartWidget

@@ -30,6 +30,7 @@ const ItemCount = ({initial,stock, onAdd}) => {
                 <button onClick ={sumar} id='button'>Sumar</button>
                 <button onClick ={restar} id='button2'>Restar </button>
                <Link to={"/cart"}>
+                <Cart/>
                 <button onClick ={confirmar} id='button3'>Confirmar Compra</button>
                 </Link> 
             </div>
