@@ -29,3 +29,7 @@ function NavBars({type}) {
 }
 
 export default NavBars;
+
+
+
+

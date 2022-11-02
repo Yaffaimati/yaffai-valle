@@ -3,32 +3,39 @@ import { useEffect,useState } from "react";
 import ItemDetail from "./ItemDetail"
 import {useParams} from 'react-router-dom'
 import {db} from "../firebase"
-import {collection, getDoc, doc} from "firebase/firestore"
+import {collection, getDocs} from "firebase/firestore"
 
 
 const ItemDetailContainer = () => { 
     
-    const [productos, setProductos] = useState ({});
-     const { id } = useParams();
+    const [listProductos, setListProductos] = useState ({})
+    const [loading, setLoading] = useState(false)
+     const { id } = useParams()
 
     useEffect (() => {
         
        const productosCollection = collection (db, "productos")
-       const referencia = doc(productosCollection,id)
-       const consulta = getDoc(referencia)
-       
+       const consulta = getDocs(productosCollection)
        consulta 
-       .then((res)=>{
-        setProductos(res.data())
-       })
-       .catch((err) => {
-        console.log(err)
-       })
-    },[id])
+            .then(snapshot => {
+                const product = snapshot.docs.map(doc =>
+                    {
+                        return {
+                            ...doc.data(),
+                            id: doc.id
+                        }
+                    })
+                    setListProductos(product.find(item => item.id === id))
+                    setLoading(true)
+            })       
+      
+    }, [id])
 
     return (
         <>
-        <ItemDetail productos={productos}/>
+        {!loading && <span>Loading...</span>}
+        {loading && <ItemDetail listProductos={listProductos}/>}
+        
         
         </>
     )

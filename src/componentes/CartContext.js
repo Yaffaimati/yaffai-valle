@@ -1,49 +1,63 @@
 
-import {createContext, useContext, useState} from 'react';
+import {createContext, useState} from 'react';
 
-const contexto = createContext ();
-
-const {Provider} = contexto;
-
-export const useCarrito = () => {
-    const valor_del_contexto = useContext (contexto)
-
-    return valor_del_contexto
-}
+export const contexto = createContext();
+const { Provider} = contexto
 
 const CartContext = (props) => {
 
-    const [cantidad, setCantidad] = useState(0);
-    const [carrito, setCarrito] = useState ([]);
-    const [precioTotal, serPrecioTotal] = useState (0);
-    
+    const [cantidad, setCantidad] = useState(0)
+    const [carrito, setCarrito] = useState([])
 
-    const agregarProducto = (product) => {
-    
-        setCantidad (cantidad + product.cantidad)
+    const isInCart = ((id) => {
+        return carrito.some(c => c.id === id)
+    })
+
+    const agregarCarrito = (product) => {
+
+        if (isInCart(product.id)) {
+            const encontra = carrito.find(x => x.id === product.id)
+            const index = carrito.indexof(encontra)
+            const arr = [...carrito]
+            arr[index].cantiadad += cantidad
+            setCarrito(arr)
+        } 
+        else{
+            setCarrito([...carrito, product])
+            setCantidad(cantidad + product.cantidad);
+        }
     }
 
-    const eliminarProducto = () => {}
 
-    const vaciarCarrito = () => {
+    const eliminarItem = (id) => {
+        return setCarrito(carrito.filter(element => element.id !== id))
+    }
+    
+    const eliminarCarrito = () => {
         setCarrito([])
+        setCantidad(0)
     }
-    
-    const estaEnCarrito = (id) => {}    
 
-    const valorDelContexto = {
+    const getItemPrice = () => {
+        return carrito.reduce ((acc, x) => acc += x.cantidad * x.price, 0)
+
+    }
+
+    const valorDeContexto = {
         cantidad: cantidad,
-        carrito : carrito,
-        setCantidad,
-        setCarrito
-       }
-    
-    return (
-    <Provider value={valorDelContexto}>
-        {props.children}
+        carrito: carrito,
+        agregarCarrito,
+        eliminarCarrito,
+        eliminarItem,
+        getItemPrice,
 
-    </Provider>
-    )
+    }
+        
+        return (
+            <Provider value={valorDeContexto}>
+                {props.children}
+            </Provider>
+        )
+
 }
-export default CartContext;
-
+export default CartContext

@@ -7,67 +7,65 @@ import { collection, getDocs , query, where } from "firebase/firestore"
 
 
 
-const ItemListContainer = () => { 
+const ItemListContainer = ({greeting}) => { 
     const [productos, setProductos] = useState ([])
-    const[loading,setLoading] = useState (true)
-    const {id} = useParams ()
+    const[loading, setLoading] = useState (true)
+    const {category} = useParams ()
 
     useEffect (() => {
    
         
    
-        if (!id){ 
-          const productosCollection = collection(db, "productos") 
+        
+          const productosCollection = collection (db, "productos") 
           const consulta = getDocs (productosCollection)
 
      consulta
-     .then(snapshot=>{
-        
-        const productos = snapshot.docs.map(doc=>{
-            
-           return{
-            ...doc.data(),
-            id: doc.id
-        }
-        })
+        .then(snapshot=>{
+           const productos = snapshot.docs.map(doc=>{
+              return{
+                  ...doc.data(),
+                  id: doc.id
+              }
+           })
         setProductos(productos)
         setLoading(false)
      })
-     .catch(err=>{
-        console.log(err)
-     })
-    }else{
-        const productosCollection = collection(db, "productos") 
-         const filtro = query(productosCollection, where)
-        const consulta = getDocs (filtro)
-   
-        consulta
-        .then(snapshot=>{
-           
-           const productos = snapshot.docs.map(doc=>{
-               
-              return{
-               ...doc.data(),
-               id: doc.id
-           }
-           })
-           setProductos(productos)
-           setLoading(false)
-        })
-        .catch(err=>{
-           console.log(err)
-        })
+     
+     if (category === "Localidades") {
+        const q = query(collection(db, "productos"), where("category", "==", "Localidades"));
+        getDocs(q).then((snapshot) => { setProductos(snapshot.docs.map((doc) => ({ id:doc.id, ...doc.data() }))) }) 
+     }
+     if (category === "Hospedajes") {
+      const q = query(collection(db, "productos"), where("category", "==", "Hospedajes"));
+      getDocs(q).then((snapshot) => { setProductos(snapshot.docs.map((doc) => ({ id:doc.id, ...doc.data() }))) }) 
+   }
+   if (category === "Excursiones") {
+      const q = query(collection(db, "productos"), where("category", "==", "Excursiones"));
+      getDocs(q).then((snapshot) => { setProductos(snapshot.docs.map((doc) => ({ id:doc.id, ...doc.data() }))) }) 
+   }
+}, [category])
 
-    }
-    },[id])  
 
-    return (
+if (loading) {
+   return (
+      <>
+      <h2>{greeting}</h2>
+      </>)
+} else {
+   return (
         <>
-        { loading && <ItemList productos={productos} />}
+        <ItemList productos={productos} />
         </>
-    )
+
+   )
+}
 
 }
+
+
+
+
     
 
     

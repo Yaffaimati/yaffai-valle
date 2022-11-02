@@ -1,90 +1,45 @@
-import {useState} from "react"
-import {db} from "../firebase"
-import {collection, addDoc, serverTimestamp} from "firebase/firestore"
-import {useCarrito} from "./CartContext"
-import {toast} from "react-toastify";
+import {useContext} from "react"
+import {contexto} from "./CartContext"
+import { Link } from 'react-router-dom'
 
-const productos = collection (db, "productos")
+
 
 const Cart = () => {
- 
-  const [nombre, setNombre] = useState ("");
-  
-  const [apellido, setApellido] = useState ("");
- 
-  const [email, setEmail] = useState ("");
-  
-  const [telefono, setTelefono] = useState ("");
+    const { carrito, eliminarItem, eliminarCarrito} = useContext(contexto)
 
-  
+    if (carrito.length > 0) {
 
-const {carrito} = useCarrito()
-
-
-  const datosCompleto = `${nombre} ${apellido} ${email} ${telefono}`;
-
-  const handleChangeNombre = (e) => {
-    e.preventDefault()
-    const input = e.target
-    const value = input.value
-    setNombre(value)
-   }
-  
-  const handleChangeApellido = (e) => {
-    const input = e.target
-    const value = input.value
-    setApellido(value)
-  }
-  
-  const handleChangeEmail= (e) => {
-    const input = e.target
-    const value = input.value
-    setEmail(value)
-  }
-   
-  const handleChangeTelefono = (e) => {
-    const input = e.target
-    const value = input.value
-    setTelefono(value)
-  }
- 
-  
-  const handleConfirm = () => {
-
-    const orden = {
-      items : carrito,
-      buyer : {
-        nombre : "Matias",
-        apellido : "Yaffai",
-        telegono : "454545363",
-        email: "emai@mail.com",
-      },
-      total : 0,
-      date : serverTimestamp(),
-    }
-
-    const ordersCollection = collection (db, "orders")
-    const consulta = addDoc(ordersCollection,orden)
-
-      consulta 
-      .then((res) => {
-        toast.success(`Orden${res.id} creada con exito!`)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-
-  }
-    
-    return (
-       <div className = 'col-xl-4'>
-       <input type="text" placeholder="Nombre" onChange={handleChangeNombre} value={nombre}/>
-       <input type="text" placeholder="Apellido" onChange={handleChangeApellido} value={apellido}/>
-       <input type="text" placeholder="Email" onChange={handleChangeEmail} value={email}/>
-       <input type="text" placeholder="Telefono" onChange={handleChangeTelefono} value={telefono}/>
-
-       <button onClick={handleConfirm}>Confirmar compra</button>
-       </div>
+        return (
+        <>
+          <div className="">
+            {
+              carrito.map((element, index) => {
+                return <div key={index} className="">
+                  <div><img src={element.image} alt={element.product}/>
+                  </div>
+                   <div> 
+                        <h2>{element.product}</h2>
+                        <h3>Precio: ${element.price}</h3>
+                        <h3>Cantidad: {element.stock}</h3>
+                   </div>
+                <div>
+                     <button className="btn btn-warning" onClick={() => eliminarItem(element.id)}>Eliminar</button>  
+                </div>      
+             </div>
+           })
+         }
+     </div>
+     <div>
+       <button  className="btn btn-warning" onClick={() => eliminarCarrito()}>Vaciar el carrito</button>
+     </div>
+     <div>
+      <Link to={'/checkout'}/><button className="btn btn-success">Ir al checkout</button><Link/>
+     </div>
+  </>
   )
 }
+
+
+}
+
 export default Cart

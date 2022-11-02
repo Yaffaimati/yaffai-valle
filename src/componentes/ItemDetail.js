@@ -1,25 +1,44 @@
 import ItemCount from './ItemCount'
-import {useCarrito} from "./CartContext"
+import {contexto} from "./CartContext"
 
-const ItemDetail = ({product}) => {
+import {useState, useContext} from "react"
+import {NavLink} from "react-router-dom"
 
-  const {agregarProducto} = useCarrito ()
+
+const ItemDetail = ({listProductos}) => {
+
+  const [seAgrego, setSeAgrego] = useState(false)
+  const {agregarCarrito}=useContext(contexto) 
   
-  const onAdd = (contador) => {
-    product.cantidad = contador
-    agregarProducto(product)
+  const onAdd=(contador)=>{
+    setSeAgrego(true)
+    listProductos.cantidad = contador
+    
+    agregarCarrito(listProductos)
+  
   }
+
   return (
     <>
     <div className="card">
-    <img src={product.image} alt={product.id}></img>
+    <img src={listProductos.image} alt={listProductos.id}></img>
      
-     <h1>{product.product} </h1> 
-     <h2>{product.description} </h2>
-     <h3>{product.category}</h3>
-     <h4>Precio:${product.price} </h4> 
-     <h5>Disponible:{product.stock}</h5>  
-    <ItemCount className="prueba" stock={product.stock} onAdd={onAdd}/>
+     <h1>{listProductos.product} </h1> 
+     <h2>{listProductos.description} </h2>
+     <h3>{listProductos.category}</h3>
+     <h4>Precio:${listProductos.price} </h4> 
+     <h5>Disponible:{listProductos.stock}</h5>  
+     
+     {
+      seAgrego ?
+      <NavLink to="/cart">
+       <button className="btn btn-primary">Ir al Carrito</button>
+      </NavLink>
+      :
+      <ItemCount className="prueba" stock={listProductos.stock} incial={0} onAdd={onAdd}/>
+     }
+    
+   
    </div>
     </>
   )
